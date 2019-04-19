@@ -2,7 +2,7 @@
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<%@ page import javax.servlet.http.HttpServletRequest;%>
+<%@ page import= "javax.servlet.http.HttpServletRequest"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -29,6 +29,7 @@
 			String str = "SELECT * FROM accounts WHERE username = " + username;
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
+			System.out.println(result);
 
 			if(result == null){
 				System.out.println("An account does not exist with this username. Please sign up.");
@@ -44,6 +45,7 @@
 				System.out.println("Your password is incorrect.");
 			}
 			else{
+				//System.out.println("Gets to else statement");
 				response.sendRedirect("main.jsp");
 	}
 
