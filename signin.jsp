@@ -2,8 +2,6 @@
 	pageEncoding="ISO-8859-1" import="com.cs336.pkg.*"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
-<%@ page import= "javax.servlet.http.HttpServletRequest"%>
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,50 +16,37 @@
 		try {
 			
 			//Create a connection string
-			String url = "jdbc:mysql://cs336db.cvr5ehxrgnip.us-east-2.rds.amazonaws.com:3306";
+			//String url = "jdbc:mysql://cs336db.cvr5ehxrgnip.us-east-2.rds.amazonaws.com:3306";
 
-			Class.forName("com.mysql.jdbc.Driver");
+			//Class.forName("com.mysql.jdbc.Driver");
 
 			//Create a connection to your DB
-			Connection con = DriverManager.getConnection(url, "cs336","yahoo.com1");
+			//Connection con = DriverManager.getConnection(url, "cs336","yahoo.com1");
 
 			//Get the database connection
-			//ApplicationDB db = new ApplicationDB();	
-			//Connection con = db.getConnection();	
+			ApplicationDB db = new ApplicationDB();	
+			Connection con = db.getConnection();	
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
 			//Get the combobox from the index.jsp
 			String username = request.getParameter("username");
+			String password = request.getParameter("password");
 			//Make a SELECT query from the sells table with the price range specified by the 'price' parameter at the index.jsp
-			String str = "SELECT * FROM accounts WHERE username = " + username;
+			String str = "SELECT * FROM accounts WHERE username='" + username +"' AND pass='"+ password +"'";
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
-
-			if(result == null){
-				System.out.println("An account does not exist with this username. Please sign up.");
-			}
 			
-			System.out.println(username);
-			
-			String password = request.getParameter("password");
-			
-			String str2 = "Select * FROM accounts WHERE password = " + password;
-			
-			ResultSet result2 = stmt.executeQuery(str2);
-			
-			if(result2 == null){
-				System.out.println("Your password is incorrect.");
+			if(result.next() == false){	
+				response.sendRedirect("loginfailed.jsp");
 			}
 			else{
-				System.out.println("Gets to else statement");
 				response.sendRedirect("main.jsp");
-	}
-
+			}
+			
 
 			//close the connection.
 			con.close();
-			response.sendRedirect("main.jsp");
 
 		} catch (Exception e) {
 		}
