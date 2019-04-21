@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Sign Up</title>
 </head>
 <body>
 	<%
@@ -25,11 +25,13 @@
 		String password = request.getParameter("password");
 		String fullname = request.getParameter("fullname");
 		String address = request.getParameter("address");
+		int isAdmin = 0;
+		int isCustomerRep = 0;
 
 		
 		//Make an insert statement for the Sells table:
-		String insert = "INSERT INTO accounts(username, password, fullname, address)"
-				+ "VALUES (?, ?, ?, ?)";
+		String insert = "INSERT INTO accounts(username, pass, fullname, address, isAdmin, isCustomerRep, accountID)"
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		//Create a Prepared SQL statement allowing you to introduce the parameters of the query
 		PreparedStatement ps = con.prepareStatement(insert);
 
@@ -38,6 +40,18 @@
 		ps.setString(2, password);
 		ps.setString(3, fullname);
 		ps.setString(4, address);
+		ps.setInt(5, isAdmin);
+		ps.setInt(6, isCustomerRep);
+		
+		Statement count = con.createStatement();
+		String query = "SELECT COUNT(*) AS count FROM accounts";
+		ResultSet countResult = stmt.executeQuery(query);
+		countResult.next();
+		int counter = countResult.getInt("count");
+		
+		ps.setInt(7, counter);
+		
+		
 		//Run the query against the DB
 		ps.executeUpdate();
 		//Run the query against the DB
