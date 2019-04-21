@@ -23,7 +23,7 @@
 			Class.forName("com.mysql.jdbc.Driver");
 
 			//Create a connection to your DB
-			Connection con = DriverManager.getConnection(url, "cs336db","yahoo.com1");
+			Connection con = DriverManager.getConnection(url, "cs336","yahoo.com1");
 
 			//Get the database connection
 			//ApplicationDB db = new ApplicationDB();	
