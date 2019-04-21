@@ -16,10 +16,18 @@
 		List<String> list = new ArrayList<String>();
 
 		try {
+			
+			//Create a connection string
+			String url = "jdbc:mysql://cs336db.cvr5ehxrgnip.us-east-2.rds.amazonaws.com:3306";
+
+			Class.forName("com.mysql.jdbc.Driver");
+
+			//Create a connection to your DB
+			Connection con = DriverManager.getConnection(url, "cs336db","yahoo.com1");
 
 			//Get the database connection
-			ApplicationDB db = new ApplicationDB();	
-			Connection con = db.getConnection();	
+			//ApplicationDB db = new ApplicationDB();	
+			//Connection con = db.getConnection();	
 			
 			//Create a SQL statement
 			Statement stmt = con.createStatement();
@@ -29,11 +37,12 @@
 			String str = "SELECT * FROM accounts WHERE username = " + username;
 			//Run the query against the database.
 			ResultSet result = stmt.executeQuery(str);
-			System.out.println(result);
 
 			if(result == null){
 				System.out.println("An account does not exist with this username. Please sign up.");
 			}
+			
+			System.out.println(username);
 			
 			String password = request.getParameter("password");
 			
@@ -45,14 +54,14 @@
 				System.out.println("Your password is incorrect.");
 			}
 			else{
-				//System.out.println("Gets to else statement");
+				System.out.println("Gets to else statement");
 				response.sendRedirect("main.jsp");
 	}
 
-			
 
 			//close the connection.
 			con.close();
+			response.sendRedirect("main.jsp");
 
 		} catch (Exception e) {
 		}
