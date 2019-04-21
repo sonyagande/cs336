@@ -15,6 +15,7 @@
   <a href="notifications.jsp">Notifications</a>
   <a href="myaccount.jsp">My Account</a>
   <input type="text" placeholder="Search..">
+  <a href="index.jsp">Logout</a>
 </div>
 </body>
 </html>
