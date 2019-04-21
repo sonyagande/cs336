@@ -11,10 +11,9 @@
 </head>
 <body>
 
-
 									  
 <br>
-<form method="post" action="signin.jsp">
+	<form method="post" action="signin.jsp">
 	<table>
 	<tr>    
 	<td>Username:</td><td><input type="text" name="username"></td>
@@ -27,9 +26,6 @@
 	<a href="createAccount.jsp">Don't have an account?</a>
 	
 	</form>
- 
-
-
 
 <br>
 
