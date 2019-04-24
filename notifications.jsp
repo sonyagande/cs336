@@ -47,12 +47,12 @@
 		//This query finds the username and AID for every max bid of auctions that haven't closed out
 		ResultSet hit = stmt.executeQuery("SELECT DISTINCT Username, auctionID"
 									+	  " FROM bid,"
-									+     " (SELECT auctionID AS accountId, MAX(price) AS bidprice" 
+									+     " (SELECT auctionID AS accountId, MAX(price) AS price" 
 									+     " FROM bids GROUP BY accountID) AS maxTable,"
-									+	  " (SELECT auctionID AS AID2"
+									+	  " (SELECT auctionID AS accountID"
 									+	  " FROM AuctionItem WHERE closingTime > current_time()) AS auctionTable,"
 									+ 	  " (SELECT accountID AS accountID FROM bids WHERE Username ='" + username + "'" + " ) AS userTable"
-									+	  " WHERE maxTable.BidPrice1 = BidPrice AND accountID = maxTable.accountID AND auctionTable.accountID = maxTable.accountID AND auctionTable.accountID = accountID AND accountID = userTable.accountID AND maxTable.accoutID = userTable.accountID AND auctionTable.accountID = userTable.accountID");
+									+	  " WHERE maxTable.price = price AND accountID = maxTable.accountID AND auctionTable.accountID = maxTable.accountID AND auctionTable.accountID = accountID AND accountID = userTable.accountID AND maxTable.accoutID = userTable.accountID AND auctionTable.accountID = userTable.accountID");
 		
 		//If a user doesn't have an alert this will be used as a flag
 		boolean alertFlag = false;
