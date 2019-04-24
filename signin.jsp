@@ -7,22 +7,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Sign In</title>
 </head>
 <body>
 	<%
-		List<String> list = new ArrayList<String>();
+		//List<String> list = new ArrayList<String>();
 
 		try {
-			
-			//Create a connection string
-			//String url = "jdbc:mysql://cs336db.cvr5ehxrgnip.us-east-2.rds.amazonaws.com:3306";
-
-			//Class.forName("com.mysql.jdbc.Driver");
-
-			//Create a connection to your DB
-			//Connection con = DriverManager.getConnection(url, "cs336","yahoo.com1");
-
 			//Get the database connection
 			ApplicationDB db = new ApplicationDB();	
 			Connection con = db.getConnection();	
@@ -41,10 +32,24 @@
 				response.sendRedirect("loginfailed.jsp");
 			}
 			else{
-				response.sendRedirect("main.jsp");
+				if(result.getString("isCustomerRep").equals("1")){
+					session.setAttribute("isCustRep", "1");
+				}
+				else{
+					session.setAttribute("isCustRep", "0");
+				}
+				if(result.getString("isAdmin").equals("T")){
+					session.setAttribute("isAdmin", "T");
+				}
+				else{
+					session.setAttribute("isAdmin", "0");
+				}
+				int accountID = result.getInt("accountID");
+				session.setAttribute("accountID",accountID);
+				response.sendRedirect("mainredirect.jsp");
 			}
 			
-
+			
 			//close the connection.
 			con.close();
 
